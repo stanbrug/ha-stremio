@@ -10,8 +10,9 @@ RUN apk add --no-cache \
 
 # Download stremio server
 RUN mkdir -p /stremio-server && \
-    wget -O /stremio-server/server.js \
-    "https://dl.strem.io/server/v4.20.8/desktop/server.js"
+    wget -q -O /stremio-server/server.js \
+    "https://dl.strem.io/server/v4.20.8/desktop/server.js" || \
+    (echo "Failed to download server.js" && exit 1)
 
 # Create data directory
 RUN mkdir -p /data/stremio-server
