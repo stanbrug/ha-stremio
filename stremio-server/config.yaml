@@ -1,0 +1,21 @@
+name: Stremio Server
+version: "1.0.0"
+slug: stremio-server
+description: Stremio streaming server voor Home Assistant
+url: https://github.com/stanbruggeman/ha-stremio
+arch:
+  - amd64
+  - aarch64
+init: false
+ports:
+  11470/tcp: 11470
+  12470/tcp: 12470
+ports_description:
+  11470/tcp: Stremio HTTP
+  12470/tcp: Stremio HTTPS
+map:
+  - share:rw
+options:
+  no_cors: true
+schema:
+  no_cors: bool
