@@ -6,7 +6,7 @@ url: https://github.com/stanbruggeman/ha-stremio
 arch:
   - amd64
   - aarch64
-init: true
+init: false
 ports:
   11470/tcp: 11470
   12470/tcp: 12470

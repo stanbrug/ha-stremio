@@ -1,19 +1,21 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/sh
 
-bashio::log.info "Starting Stremio Server..."
-
-# Read configuration
-NO_CORS_ENABLED=$(bashio::config 'no_cors')
+echo "Starting Stremio Server..."
 
 export APP_PATH="/data/stremio-server"
 
-if bashio::var.true "${NO_CORS_ENABLED}"; then
-    bashio::log.info "CORS is disabled"
-    export NO_CORS=1
+# Read options.json for configuration
+OPTIONS_FILE="/data/options.json"
+if [ -f "$OPTIONS_FILE" ]; then
+    NO_CORS=$(cat "$OPTIONS_FILE" | grep -o '"no_cors":[^,}]*' | cut -d: -f2 | tr -d ' ')
+    if [ "$NO_CORS" = "true" ]; then
+        echo "CORS is disabled"
+        export NO_CORS=1
+    fi
 fi
 
-bashio::log.info "Data directory: ${APP_PATH}"
-bashio::log.info "HTTP port: 11470"
-bashio::log.info "HTTPS port: 12470"
+echo "Data directory: ${APP_PATH}"
+echo "HTTP port: 11470"
+echo "HTTPS port: 12470"
 
 exec node /stremio-server/server.js
